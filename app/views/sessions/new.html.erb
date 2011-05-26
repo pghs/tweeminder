@@ -4,7 +4,7 @@
   <% hash =  Twitter.friend_ids(@user.id).ids %>
   <% i = 0
       hash.each do |num|
-        @act = Account.find_by_twitter_id(num)
+        @act = Account.find_by_twitter_id("#{num}")
         if i<10 and !@act
           @act = Account.create_profile(num, @user.id)
           sleep 1
@@ -13,7 +13,7 @@
       end%>
 <% @counter = 0 %>
 <% hash.each do |num| %>
-        <% acct = Account.find_by_twitter_id(num) %>
+        <% acct = Account.find_by_twitter_id("#{num}") %>
         <% if acct %>
         <% @counter = @counter + 1 %>
         <div style="width:50px; height: 50px; float:left;">
