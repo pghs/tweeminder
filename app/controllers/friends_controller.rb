@@ -23,6 +23,12 @@ class FriendsController < ApplicationController
   def unfriend
     Twitter.friendship_destroy(params[:id])
     flash[:notice] = "Unfriended #{params[:id]}"
+    sleep 2
+    Twitter.friendship_create(params[:id])
+    flash[:notice] = "refriended #{params[:id]}"
+    acct = Account.where("screen_name = ?", params[:id])
+    acct.friended_at = Date.today
+    acct.save
     redirect_to new_session_path
   end
 end

@@ -6,9 +6,13 @@
 <% accts = Account.where("user_id = ?", @user.id_str) %>
 <% accts.each do |f|%>
   <% if !f.follows and !f.follows.nil?%>
-  <div style="width:75px; height: 75px; float:left;">
+  <div style="width:120px; height: 150px; float:left; margin:5px;">
   <%= image_tag(f.pic_url, :size => "48x48") %>
-  <%=link_to "Unfriend #{f.screen_name}", :controller => "friends", :action => "unfriend", :id => f.screen_name %>
+    <br/>
+  <%=link_to "Refriend #{f.screen_name}", :controller => "friends", :action => "unfriend", :id => f.screen_name %>
+  <br/>
+  Refriended last on: <%= f.friended_at %>
   </div>
   <% end %>
   <% end %>
+<div class="clr"></div>
