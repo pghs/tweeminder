@@ -1,0 +1,31 @@
+<% if signed_in? %>
+<h3>These are the people you follow</h3>
+<h5>Doesn't look like enough? Refresh the page a few times to get the full list, <%= @user.screen_name%> </h5>
+  <% hash =  Twitter.friend_ids(@user.id).ids %>
+  <% i = 0
+      hash.each do |num|
+        @act = Account.find_by_twitter_id(num)
+        if i<10 and !@act
+          @act = Account.create_profile(num, @user.id)
+          sleep 1
+          i = i+1
+      end
+      end%>
+<% @counter = 0 %>
+<% hash.each do |num| %>
+        <% acct = Account.find_by_twitter_id(num) %>
+        <% if acct %>
+        <% @counter = @counter + 1 %>
+        <div style="width:50px; height: 50px; float:left;">
+        <%= image_tag(acct.pic_url, :size => "48x48", :alt => acct.screen_name)%>
+        </div>
+        <% end %>
+<% end %>
+<div class="clr"></div>
+<h1><%= link_to "See Who Isn't Following You Back", :controller => "friends", :action => "notfollowing" %></h1>
+<h5>Displaying <%=@counter%> of <%= @user.friends_count %></h5>
+<% else %>
+  <%= form_tag('/sessions') do %>
+    <%= submit_tag("Sign in to your Twitter") %>
+  <% end %>
+<% end %>

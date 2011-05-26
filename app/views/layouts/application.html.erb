@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tweeminder</title>
+  <%= csrf_meta_tag %>
+  <%= stylesheet_link_tag 'application' %>
+</head>
+<body>
+  <div id="container">
+    <div id="nav">
+      <div style="width:200px; float:left;"><h1>Tweeminder</h1></div>
+      <div style="width:300px; float:right;">
+        <%if signed_in?%>
+            <div style="height:48px; width: 48px; float:right;">
+            <%= image_tag(@user.profile_image_url).html_safe %>
+            </div>
+            <h4 style="float:right; padding-right: 5px;">Welcome, <%= link_to(@user.name, @user.url) %></h4>
+            <div class="clr"></div>
+            <div style="width:100px; float:right;">
+            <%= form_tag('/sessions/destroy', :method => :delete) do %>
+              <%= submit_tag 'Sign out' %>
+            <% end %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="clr"></div>
+
+    <div id="content" class="rounded_border">
+      <!--flash messages-->
+      <% unless flash[:notice].blank? && flash[:error].blank? && flash[:alert].blank? %>
+        <div class="flash_container">
+          <% unless flash[:alert].blank? %><span class="error rounded_border"><%= flash[:alert] %></span><% end %>
+          <% unless flash[:notice].blank? %><span class="notice rounded_border"><%= flash[:notice] %></span><% end %>
+          <% unless flash[:error].blank? %><span class="error rounded_border"><%= flash[:error] %></span><% end %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
+  </div>
+</body>
+</html>

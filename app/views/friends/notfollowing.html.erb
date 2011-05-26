@@ -1,0 +1,14 @@
+<%= @friend %>
+<br/>
+<%=@screens%>
+<h2>These IDs do not follow you back</h2>
+
+<% accts = Account.where("user_id = ?", @user.id_str) %>
+<% accts.each do |f|%>
+  <% if !f.follows and !f.follows.nil?%>
+  <div style="width:75px; height: 75px; float:left;">
+  <%= image_tag(f.pic_url, :size => "48x48") %>
+  <%=link_to "Unfriend #{f.screen_name}", :controller => "friends", :action => "unfriend", :id => f.screen_name %>
+  </div>
+  <% end %>
+  <% end %>
