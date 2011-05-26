@@ -10,8 +10,6 @@
   <%= image_tag(f.pic_url, :size => "48x48") %>
     <br/>
   <%=link_to "Refriend #{f.screen_name}", :controller => "friends", :action => "unfriend", :id => f.screen_name %>
-  <br/>
-  Refriended last on: <%= f.friended_at %>
   </div>
   <% end %>
   <% end %>
